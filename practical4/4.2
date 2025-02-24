@@ -1,0 +1,26 @@
+%option noyywrap
+%{
+   #include <stdio.h>
+   #include <string.h>
+%}
+
+%%
+
+[Cc]harusat   { printf("university"); }  // Replace "charusat" or "Charusat" with "university"
+.             { printf("%s", yytext); }  // Print other characters as is
+
+%%
+
+int main()
+{
+    char input[1000];  // Buffer to store input
+
+    printf("Enter the input text:\n");
+    fgets(input, sizeof(input), stdin);  // Read input text
+
+    YY_BUFFER_STATE buffer = yy_scan_string(input);  // Process input from memory
+    yylex();  // Call lexical analyzer
+    yy_delete_buffer(buffer);  // Free buffer memory
+
+    return 0;
+}
